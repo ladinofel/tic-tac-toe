@@ -1,8 +1,8 @@
 const gameBoard = (() => {
   let gameboard = [
-    , , ,
-    , , ,
-    , , ,
+    "", "", "",
+    "", "", "",
+    "", "", "",
   ];
   let cells = document.querySelectorAll('.cell');
   
@@ -11,11 +11,10 @@ const gameBoard = (() => {
       cells[i].textContent = gameboard[i];
     }
   }
-
   return {cells, gameboard, populateBoard};
-
 })();
 
+//
 const checkWinner = (() => {
   const {cells} = gameBoard;
   let winCombo = [
@@ -30,22 +29,35 @@ const checkWinner = (() => {
   ];
 
   const winner = () => {
+    let test = "";    
+    let {modalInfo} = announceWinner;
     for(let comb of winCombo){
       if(cells[comb[0]].textContent == cells[comb[1]].textContent && 
          cells[comb[1]].textContent == cells[comb[2]].textContent &&
          cells[comb[0]].textContent != ""
-      ) {
-        alert('winning combination!');
-      }
+        ){        
+        test = `${cells[comb[2]].textContent}`;
+        modalInfo(test);
+      }      
     }
     return false;
-  }
-
+  };
   return {winner};
-  
-  })();
+})();
 
+//
 
+const announceWinner = (() => {
+  const modalInfo = (test) => {
+    const modal = document.querySelector('.modal');
+    modal.showModal();
+    const container = document.querySelector('.announcement_container');
+    const title = document.createElement('p');
+    title.textContent = `The winner of this round is ${test}`;
+    container.appendChild(title);  
+  }
+  return {modalInfo};
+})();
 
 const playRound = ( () => {
   const {gameboard} = gameBoard;
@@ -57,32 +69,25 @@ const playRound = ( () => {
   const modifyGameboard = () => {
     cells.forEach((btn) => {
       btn.addEventListener('click', () => {
-        if(content){
-          gameboard[btn.id] = 'X';
-          populateBoard();
-          content = false;
-          winner();        
-          } else {
-          gameboard[btn.id] = 'O';
-          populateBoard();
-          content = true;
-          winner();            
-      } })
+        if(gameboard[btn.id] === ""){
+          if(content){
+            gameboard[btn.id] = 'X';
+            populateBoard();
+            content = false;
+            winner();        
+            } else {
+            gameboard[btn.id] = 'O';
+            populateBoard();
+            content = true;
+            winner();            
+          }} else {
+            alert('ERROR');
+            return false;
+          }
+      } )
     }) 
   }
   return {modifyGameboard};
 })();
 
-
-
-
-
-
 playRound.modifyGameboard();
-
-const PlayerFactory = (name, team) => {
-  const {modifyGameboard} = playRound;
-  return {name, team, modifyGameboard}
-};
-
-const playerA = PlayerFactory('test', 'X');
