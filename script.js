@@ -1,3 +1,4 @@
+//This piece of code sets the initial gameboard and allows for refreshing it when a round is done. 
 const gameBoard = (() => {
   let gameboard = [
     "", "", "",
@@ -11,12 +12,20 @@ const gameBoard = (() => {
       cells[i].textContent = gameboard[i];
     }
   }
-  return {cells, gameboard, populateBoard};
+
+  const refreshBoard = () => {
+    for(let i = 0; i < gameboard.length; i++){
+      gameboard[i] = "";
+    }
+  }
+  return {cells, gameboard, refreshBoard, populateBoard};
 })();
 
-//
+//This piece of code verifies if there is a winner or a draw.
 const checkWinner = (() => {
   const {cells} = gameBoard;
+  let {gameboard} = gameBoard;
+  let victory = false;
   let winCombo = [
     [0,1,2],
     [3,4,5],
@@ -29,41 +38,76 @@ const checkWinner = (() => {
   ];
 
   const winner = () => {
-    let test = "";    
-    let {modalInfo} = announceWinner;
+    let winId = "";    
+    let {modalWin} = announcement;
     for(let comb of winCombo){
       if(cells[comb[0]].textContent == cells[comb[1]].textContent && 
          cells[comb[1]].textContent == cells[comb[2]].textContent &&
          cells[comb[0]].textContent != ""
         ){        
-        test = `${cells[comb[2]].textContent}`;
-        modalInfo(test);
+        winId = `${cells[comb[2]].textContent}`;
+        victory = true;
+        modalWin(winId);
       }      
     }
     return false;
-  };
-  return {winner};
-})();
-
-//
-
-const announceWinner = (() => {
-  const modalInfo = (test) => {
-    const modal = document.querySelector('.modal');
-    modal.showModal();
-    const container = document.querySelector('.announcement_container');
-    const title = document.createElement('p');
-    title.textContent = `The winner of this round is ${test}`;
-    container.appendChild(title);  
   }
-  return {modalInfo};
+
+  const draw = () => {
+    const {modalDraw} = announcement;
+    if(gameboard.includes("") === false && victory === false){
+      alert("There has been a draw!");
+      modalDraw();
+    }
+  }
+  return {winner, draw};
 })();
 
+//This piece of code displays the winner or draw modals depending the case. 
+const announcement = (() => {
+  const modal = document.querySelector('.modal');
+  const container = document.querySelector('.announcement_container');
+  const title = document.createElement('p');
+  const reset_btn = document.querySelector('.reset');
+  const {refreshBoard} = gameBoard;
+  const {populateBoard} = gameBoard;
+  
+  const modalWin = (winId) => {           
+    title.textContent = `The winner of this round is ${winId}`;
+    reset_btn.textContent = "Start Over";
+    container.appendChild(title); 
+    container.appendChild(reset_btn);
+    reset_btn.addEventListener('click', () => {
+      refreshBoard();
+      populateBoard();
+      modal.close();
+    });
+    modal.showModal(); 
+  }
+
+  const modalDraw = () => {
+    title.textContent = `There has been a tie!`;
+    reset_btn.textContent = "Start Over";
+    container.appendChild(title); 
+    container.appendChild(reset_btn);
+    reset_btn.addEventListener('click', () => {
+      refreshBoard();
+      populateBoard();
+      modal.close();
+    })
+    modal.showModal(); 
+  }
+
+  return {modalDraw, modalWin};
+})();
+
+//This piece of code allows the user to play a round. 
 const playRound = ( () => {
   const {gameboard} = gameBoard;
   const {cells} = gameBoard;
   const {populateBoard} = gameBoard;
   const {winner} = checkWinner;
+  const {draw} = checkWinner;
   let content = true;
 
   const modifyGameboard = () => {
@@ -74,12 +118,14 @@ const playRound = ( () => {
             gameboard[btn.id] = 'X';
             populateBoard();
             content = false;
-            winner();        
+            winner();  
+            draw();  
             } else {
             gameboard[btn.id] = 'O';
             populateBoard();
             content = true;
-            winner();            
+            winner();
+            draw();              
           }} else {
             alert('ERROR');
             return false;
