@@ -59,7 +59,7 @@ const checkWinner = (() => {
       modalDraw();
     }
   }
-  return {winner, draw};
+  return {victory, winner, draw};
 })();
 
 //This piece of code displays the winner or draw modals depending the case. 
