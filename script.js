@@ -25,7 +25,7 @@ const gameBoard = (() => {
 const checkWinner = (() => {
   const {cells} = gameBoard;
   let {gameboard} = gameBoard;
-  let victory = false;
+  let victory = false; 
   let winCombo = [
     [0,1,2],
     [3,4,5],
@@ -38,7 +38,7 @@ const checkWinner = (() => {
   ];
 
   const winner = () => {
-    let winId = "";    
+    let winId = "";       
     let {modalWin} = announcement;
     for(let comb of winCombo){
       if(cells[comb[0]].textContent == cells[comb[1]].textContent && 
@@ -46,7 +46,7 @@ const checkWinner = (() => {
          cells[comb[0]].textContent != ""
         ){        
         winId = `${cells[comb[2]].textContent}`;
-        victory = true;
+        checkWinner.victory = true;
         modalWin(winId);
       }      
     }
@@ -55,7 +55,7 @@ const checkWinner = (() => {
 
   const draw = () => {
     const {modalDraw} = announcement;
-    if(gameboard.includes("") === false && victory === false){
+    if(gameboard.includes("") === false && checkWinner.victory === false){
       modalDraw();
     }
   }
@@ -79,6 +79,7 @@ const announcement = (() => {
     reset_btn.addEventListener('click', () => {
       refreshBoard();
       populateBoard();
+      checkWinner.victory = false;
       modal.close();
     });
     modal.showModal(); 
