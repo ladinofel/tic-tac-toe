@@ -13,6 +13,7 @@ body {
 }
 
 .heading {
+  font-size: 18px;
   font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
@@ -35,6 +36,14 @@ body {
 .modal {
   margin-top: 0;
   text-align: center;
+  border-radius: 15px;
+  font-size: 20px;
+  padding: 10px;
+}
+
+.modal::backdrop {
+  background: rgb(35, 102, 247);
+  opacity: .6;
 }
 
 .footer {
@@ -46,4 +55,15 @@ body {
 #logo {
   padding: 20px;
   height: 30px;
+}
+
+.reset {
+  padding: 10px;
+  border-radius: 15px;
+}
+
+.reset:hover {
+  background-color: rgb(35, 102, 247);
+  color: white;
+  cursor: pointer;
 }

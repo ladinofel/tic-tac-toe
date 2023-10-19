@@ -56,7 +56,6 @@ const checkWinner = (() => {
   const draw = () => {
     const {modalDraw} = announcement;
     if(gameboard.includes("") === false && victory === false){
-      alert("There has been a draw!");
       modalDraw();
     }
   }
