@@ -1,3 +1,10 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 85vh;
+}
+
 .main-container {
   display: flex;
   flex-direction: column;
@@ -5,14 +12,38 @@
   align-items: center;
 }
 
+.heading {
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
 .board {
   display: grid;
+  border: solid 1.5px black;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
 }
 
 .cell {
-  border: solid 2px red;
+  border: solid 1.5px black;
   height: 100px;
   width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  margin-top: 0;
+  text-align: center;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+#logo {
+  padding: 20px;
+  height: 30px;
 }

@@ -73,8 +73,8 @@ const announcement = (() => {
   const {populateBoard} = gameBoard;
   
   const modalWin = (winId) => {           
-    title.textContent = `The winner of this round is ${winId}`;
-    reset_btn.textContent = "Start Over";
+    title.textContent = `The winner of this round is :  ${winId}`;
+    reset_btn.textContent = "START OVER";
     container.appendChild(title); 
     container.appendChild(reset_btn);
     reset_btn.addEventListener('click', () => {
@@ -87,7 +87,7 @@ const announcement = (() => {
 
   const modalDraw = () => {
     title.textContent = `There has been a tie!`;
-    reset_btn.textContent = "Start Over";
+    reset_btn.textContent = "START OVER";
     container.appendChild(title); 
     container.appendChild(reset_btn);
     reset_btn.addEventListener('click', () => {
