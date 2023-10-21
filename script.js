@@ -23,8 +23,7 @@ const gameBoard = (() => {
 
 //This piece of code verifies if there is a winner or a draw.
 const checkWinner = (() => {
-  const {cells} = gameBoard;
-  let {gameboard} = gameBoard;
+  const {cells, gameboard} = gameBoard;
   let victory = false; 
   let winCombo = [
     [0,1,2],
@@ -68,8 +67,7 @@ const announcement = (() => {
   const container = document.querySelector('.announcement_container');
   const title = document.createElement('p');
   const reset_btn = document.querySelector('.reset');
-  const {refreshBoard} = gameBoard;
-  const {populateBoard} = gameBoard;
+  const {refreshBoard, populateBoard} = gameBoard;
   
   const modalWin = (winId) => {           
     title.textContent = `The winner of this round is :  ${winId}`;
@@ -103,11 +101,8 @@ const announcement = (() => {
 
 //This piece of code allows the user to play a round. 
 const playRound = ( () => {
-  const {gameboard} = gameBoard;
-  const {cells} = gameBoard;
-  const {populateBoard} = gameBoard;
-  const {winner} = checkWinner;
-  const {draw} = checkWinner;
+  const {gameboard, cells, populateBoard} = gameBoard;
+  const {winner, draw} = checkWinner;
   let content = true;
 
   const modifyGameboard = () => {
